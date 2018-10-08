@@ -1,25 +1,38 @@
-import React, { Component } from 'react';
+import React, {
+  Component
+} from 'react';
 import logo from './logo.svg';
 import './App.css';
+import UsersList from './UsersList';
 
+
+const allUsers = ["Michał", "Ania", "Łukasz", "Tomek"];
 class App extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      filteredUsers: allUsers
+    };
+  }
+
+  getFilteredUsersForText(text) {
+    return allUsers.filter(user => user.toLowerCase().includes(text.toLowerCase()))
+  }
+
+  filterUsers(e) {
+    const text = e.currentTarget.value;
+    const filteredUsers = this.getFilteredUsersForText(text)
+    this.setState({
+      filteredUsers
+    });
+  }
+
   render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> andaaa save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+    return ( 
+      <div>
+        <input onInput={this.filterUsers.bind(this)} />
+        <UsersList users={this.state.filteredUsers} />
       </div>
     );
   }
