@@ -1,19 +1,25 @@
 import React, {
   Component
 } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import UsersList from './UsersList';
 
 
-const allUsers = ["Michał", "Ania", "Łukasz", "Tomek"];
+const allUsers = ["Michal", "Kasia", "Jacek", "Marta", "Tomek", "Ania"];
 class App extends Component {
   constructor() {
     super();
 
     this.state = {
-      filteredUsers: allUsers
+      filteredUsers: allUsers,
+      selectedUser: null
     };
+  }
+
+  setSelectedUser = (selectedUser) => {
+    this.setState({
+      selectedUser
+    });
   }
 
   getFilteredUsersForText(text) {
@@ -32,7 +38,8 @@ class App extends Component {
     return ( 
       <div>
         <input onInput={this.filterUsers.bind(this)} />
-        <UsersList users={this.state.filteredUsers} />
+        {this.state.selectedUser}
+         <UsersList userSelected={this.setSelectedUser} users={this.state.filteredUsers} />
       </div>
     );
   }
